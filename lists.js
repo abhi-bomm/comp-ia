@@ -1,7 +1,7 @@
 const fs = require("fs");
 const chalk = require("chalk");
 
-const addList = (title, item, store, quantity) => {
+const addList = (title, item, store, quantity, order) => {
   const lists = loadLists();
   const existingList = lists.find(
     (list) => list.title.toLowerCase() === title.toLowerCase()
@@ -19,6 +19,7 @@ const addList = (title, item, store, quantity) => {
         item: item,
         store: store,
         quantity: quantity,
+        order: order,
       });
 
       saveLists(lists);
@@ -34,6 +35,7 @@ const addList = (title, item, store, quantity) => {
       item: item,
       store: store,
       quantity: quantity,
+      order: order,
     });
 
     lists.push(listDetails);
@@ -43,7 +45,15 @@ const addList = (title, item, store, quantity) => {
   }
 };
 
-const updateList = (title, newTitle, item, store, quantity) => {
+const updateList = (
+  title,
+  newTitle,
+  item,
+  newItemName,
+  store,
+  quantity,
+  order
+) => {
   const lists = loadLists();
   const existingList = lists.find(
     (list) => list.title.toLowerCase() === title.toLowerCase()
@@ -58,13 +68,16 @@ const updateList = (title, newTitle, item, store, quantity) => {
       );
 
       if (existingItem) {
+        existingItem.item = newItemName || existingItem.item;
         existingItem.store = store || existingItem.store;
         existingItem.quantity = quantity || existingItem.quantity;
+        existingItem.order = order || existingItem.order;
       } else {
         const newItem = {
           item: item,
           store: store,
           quantity: quantity,
+          order: order,
         };
         existingList.items.push(newItem);
       }
@@ -143,7 +156,10 @@ const readList = (title) => {
   );
   if (listToPrint) {
     console.log(chalk.yellow.inverse(listToPrint.title.toUpperCase()));
-    console.log(listToPrint.items);
+    const items = listToPrint.items.sort(function (a, b) {
+      return parseInt(a.order) - parseInt(b.order);
+    });
+    console.log(items);
   } else console.log(chalk.inverse.red("No list found"));
 };
 

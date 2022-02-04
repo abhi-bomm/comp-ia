@@ -30,9 +30,14 @@ yargs.command({
       demandOption: false,
       type: "number",
     },
+    order: {
+      describe: "Order of the items",
+      demandOption: true,
+      type: "number",
+    },
   },
   handler(argv) {
-    lists.addList(argv.title, argv.item, argv.store, argv.quantity);
+    lists.addList(argv.title, argv.item, argv.store, argv.quantity, argv.order);
   },
 });
 
@@ -56,6 +61,11 @@ yargs.command({
       demandOption: false,
       type: "string",
     },
+    newItemName: {
+      describe: "New Item name to update part of list",
+      demandOption: false,
+      type: "string",
+    },
     store: {
       describe: "Store from where to get the item",
       demandOption: false,
@@ -66,14 +76,21 @@ yargs.command({
       demandOption: false,
       type: "number",
     },
+    order: {
+      describe: "Order of the items",
+      demandOption: false,
+      type: "number",
+    },
   },
   handler(argv) {
     lists.updateList(
       argv.title,
       argv.newTitle,
       argv.item,
+      argv.newItemName,
       argv.store,
-      argv.quantity
+      argv.quantity,
+      argv.order
     );
   },
 });
