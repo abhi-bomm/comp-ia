@@ -27,7 +27,7 @@ This is a command line tool that uses NodeJs libraries `yargs` and `chalk`. It g
 - update the list title: `node app.js update --title="list1" --newTitle "BJs" --item "squash" --quantity 2`
 - update the list item name: `node app.js update --title="BJs" --item "beets" --newItemName "onions" --quantity 2`
 - update the position of an item: `node app.js update --title="bjs" --item "beets" --store "publix" --quantity 2 --order 13`
-- list all the listsL `node app.js list`
+- list all the lists: `node app.js list`
 - read a list contents: `node app.js read --title="List2"`
 - remove an item: `node app.js remove-item --title="list2" --item "carrots"`
 - remove a list: `node app.js remove --title="List2"`
